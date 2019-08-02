@@ -1,0 +1,20 @@
+{
+	"name": "WECIRCLE",
+	"short_name": "WECIRCLE",
+	"icons": [
+	    {
+	      "src": "./img/icons/android-touch-icon-192x192-1-touming.png",
+	      "sizes": "192x192",
+	      "type": "image/png"
+	    },
+	    {
+	      "src": "./img/icons/android-touch-icon-512x512-1-touming.png",
+	      "sizes": "512x512",
+	      "type": "image/png"
+	    }
+	],
+	"start_url": "./index.html?from=manifest",
+	"display": "standalone",
+	"background_color": "#181818",
+	"theme_color": "#181818"
+}

@@ -1,0 +1,28 @@
+{
+  "name": "wecircleserver",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/server"
+  },
+  "dependencies": {
+    "@alicloud/pop-core": "^1.7.6",
+    "ali-oss": "^6.1.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "express-rate-limit": "^5.0.0",
+    "http-errors": "~1.6.2",
+    "image-size": "^0.7.4",
+    "jade": "~1.11.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.2.3",
+    "mongoose": "^5.5.4",
+    "morgan": "~1.9.0",
+    "multer": "^1.4.1",
+    "redis": "^2.8.0",
+    "socket.io": "^2.2.0",
+    "svg-captcha": "^1.4.0",
+    "web-push": "^3.3.5"
+  }
+}

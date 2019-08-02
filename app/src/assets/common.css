@@ -1,0 +1,60 @@
+    
+ul {
+    list-style: none;
+}
+
+body {
+    overflow-x: hidden;
+    text-align: center;
+}
+
+.scale-1px,.scale-1px-top {
+    position: relative;
+    border: none;
+}
+/*1px边框底部*/
+.scale-1px::after {
+    content: '';
+    position: absolute;
+    height: 1px;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    background-color: #e5e5e5; 
+}
+/*1px边框顶部*/
+.scale-1px-top::before {
+    content: '';
+    position: absolute;
+    height: 1px;
+    width: 100%;
+    top: 0;
+    left: 0;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    background-color: #e5e5e5; 
+}
+/*单行文本超出截取*/
+.one-line {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.three-line {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+}
+
+/*
+.weui-mask {
+    transform: translate3d(0,0,3px);
+}*/
