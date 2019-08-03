@@ -20,7 +20,7 @@ export default {
   },
 
   mounted () {
-    // 处理评论输入框的现实和隐藏
+    // 使用EventBus 监听外界传来的动画事件
     this.$bus.$on('showHeader', () => {
       this.headerClass = 'show'
     })
