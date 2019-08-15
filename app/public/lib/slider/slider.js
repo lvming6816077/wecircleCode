@@ -23,7 +23,7 @@
     this.radio = window.innerHeight / window.innerWidth
     // 设定一页的宽度 +10 代表每张图片流一定的间距
     this.scaleW = window.innerWidth + 10
-
+    // 放大时的最大倍数
     this.scaleMax = 2;
   }
 
@@ -158,20 +158,22 @@
       // 兼容chrome android，阻止浏览器默认行为
       evt.preventDefault()
       var target = evt.target;
+
+
       // 处理放大逻辑
       if (target.nodeName === 'IMG') {
-        // console.log(evt.touches)
+
         // 处理双指放大
         if (self.joinPinchScale && evt.touches.length >= 2) {
           var now = evt.touches;  //得到第二组两个点
 
-          self.pinchScale = self.pinchScaleEnd*(getDistance(now[0],now[1])/getDistance(self.pinchStart[0],self.pinchStart[1])); //得到缩放比例，getDistance是勾股定理的一个方法
+          //得到缩放比例，getDistance是勾股定理的一个方法
+          self.pinchScale = self.pinchScaleEnd*(getDistance(now[0],now[1])/getDistance(self.pinchStart[0],self.pinchStart[1])); 
           
+          // 首先将动画暂停
           target.style.webkitTransition = 'none';
-          // var originY = Math.abs(self.pinchStart[0].clientY - self.pinchStart[1].clientY)/2
-          // var originX = Math.abs(self.pinchStart[0].clientX - self.pinchStart[1].clientX)/2
-          // target.style.webkitTransformOriginX = originX + 'px'
-          // target.style.webkitTransformOriginY = originY + 'px'
+
+          // 通过scale设置方法系数
           target.style.webkitTransform = 'scale3d('+self.pinchScale+', '+self.pinchScale+', 1)';
 
           return
@@ -184,7 +186,10 @@
           // 计算手指的偏移量
           self._offsetX = (self._offsetEndX||0) + evt.targetTouches[0].pageX - self.startX;
           self._offsetY = (self._offsetEndY||0) + evt.targetTouches[0].pageY - self.startY;
-          var _scale = self.joinPinchScale ? self.pinchScale : self.scaleMax; // 拖动时，保持图片缩放不变，只位移
+
+          // 拖动时，保持图片缩放不变，只位移
+          var _scale = self.joinPinchScale ? self.pinchScale : self.scaleMax; 
+          // 首先将动画暂停
           target.style.webkitTransition = 'none';
           target.style.webkitTransform = 'scale3d('+_scale+', '+_scale+', 1) translate3d('+(self._offsetX*0.5)+'px, '+(self._offsetY*0.5)+'px, 0)';
           return
@@ -192,8 +197,10 @@
 
       }
 
+
+      // 处理翻页逻辑
       if (self.oneTouch) {
-        // 处理翻页逻辑
+        
         // 计算手指的偏移量
         self.offsetX = evt.targetTouches[0].pageX - self.startX
 
@@ -210,23 +217,20 @@
         }
       }
 
-
-
-
     }
 
     // 手指抬起的处理事件
     var endHandler = function (evt) {
       var target = evt.target;
 
+      /****************下面开始处理标志位重置逻辑*************/
+
       //处理放大状态的拖动行为记录最后1次手指离开的坐标
       if (target.nodeName === 'IMG' && (self.joinDbClickScale || self.joinPinchScale)) {
         self._offsetEndX = self._offsetX;
         self._offsetEndY = self._offsetY;
-        // weui.topTips('登录请使用指定浏览器，体验前沿的技术')
-        // self.joinPinchScale = false
-        // self.joinDbClickScale = false
 
+        // 在双指缩放时，不允许缩放到原始尺寸小的值
         if (self.pinchScale < 1) {
           target.style.webkitTransition = '-webkit-transform .2s ease-in-out'
           target.style.webkitTransform = 'scale3d(1,1,1)'
@@ -234,20 +238,19 @@
         }
       }
 
+      // 重置标志位
       self.oneTouch = false;
 
-
-
-      // return
-
+      /****************下面开始处理翻页逻辑和动画*************/
       // 边界就翻页值
       var boundary = scaleW / 6
 
       // 手指抬起的时间值
       var endTime = new Date() * 1
 
-      // 当手指移动时间超过300ms 的时候，按位移算
+      // 当手指移动时间超过300ms 的时候，说明是拖动(手指始终没有离开)操作，按设定临界值位移算
       if (endTime - self.startTime > 300) {
+        // 如果超过临界值，就表示需要移动到下一页
         if (self.offsetX >= boundary) {
           self.goIndex('-1')
         } else if (self.offsetX < 0 && self.offsetX < -boundary) {
@@ -256,8 +259,7 @@
           self.goIndex('0')
         }
       } else {
-        // 优化
-        // 快速移动也能使得翻页
+        // 当手指移动时间不超过300ms 的时候，说明是swipe(手指很快离开)，按固定临界值算
         if (self.offsetX > 50) {
           self.goIndex('-1')
         } else if (self.offsetX < -50) {
@@ -349,20 +351,6 @@
 })(window)
 
 window.onload = function() {
-    // // 阻止双击放大
-    // var lastTouchEnd = 0;
-    // document.addEventListener('touchstart', function(event) {
-    //     if (event.touches.length > 1) {
-    //         event.preventDefault();
-    //     }
-    // });
-    // document.addEventListener('touchend', function(event) {
-    //     var now = (new Date()).getTime();
-    //     if (now - lastTouchEnd <= 300) {
-    //         event.preventDefault();
-    //     }
-    //     lastTouchEnd = now;
-    // }, false);
 
     // 阻止双指放大
     document.addEventListener('gesturestart', function(event) {
