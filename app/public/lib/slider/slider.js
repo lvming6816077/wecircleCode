@@ -301,12 +301,20 @@
 
     }
 
+    /*
+    * 单击图片，隐藏图片查看器事件
+    */
     var tapCloseHandler = function (evt) {
+      // 先将透明度设置为0，这里采用的是一个模拟fadeOut的动画
       self.wrap.style.opacity = 0
+
+      // 然后remove节点
       setTimeout(function () {
         document.body.removeChild(self.wrap)
       }, 200)
     }
+
+    // 采用两次点击时间差来判断单击还是双击
     var lastClickTime = 0
     var clickTimer
     var clkHandler = function (evt) {
@@ -332,8 +340,10 @@
         return Math.sqrt((x * x) + (y * y)).toFixed(2);
     };
 
-
+    // 这里很重要，将我们之前的图片查看器的dom节点加载到页面上
     document.body.appendChild(this.wrap)
+
+    // 先将透明度设置成1，这里采用的是一个模拟fadeIn的动画
     setTimeout(function () {
       self.wrap.style.opacity = 1
     })
