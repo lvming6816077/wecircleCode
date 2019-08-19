@@ -13,9 +13,26 @@ var client = new Core({
 var SignName = 'WECIRCLE';
 var TemplateCode = 'SMS_164507289';
 
+Date.prototype.Format = function (fmt) {
+    var o = {
+        "M+": this.getMonth() + 1, //月份 
+        "d+": this.getDate(), //日 
+        "h+": this.getHours(), //小时 
+        "m+": this.getMinutes(), //分 
+        "s+": this.getSeconds(), //秒 
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+        "S": this.getMilliseconds() //毫秒 
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
+
 var getFormatedDate = function() {
   var date = new Date();
-  var formatedDate = date.toLocaleString().split('-').map(item => (item < 10 ? '0' + item : item)).join('')
+  var formatedDate = date.Format("yyyy-MM-dd").replace(/-/g,'');
+  // console.log(date.Format("yyyy-MM-dd"))
   return formatedDate;
 }
 
@@ -62,7 +79,7 @@ module.exports = {
       PageSize: 40,//指定每页显示的短信记录数量
       CurrentPage:1//指定发送记录的的当前页码
     }
-
+    console.log(params)
     var requestOption = {
       method: 'POST'
     };
@@ -105,7 +122,10 @@ module.exports = {
       }
     }, (ex) => {//api接口调用失败兼容
       console.log(ex);
-      fail && fail(result)
+      fail && fail({
+        code:1,
+        msg:'短信验证失败'
+      })
     })
   }
 };
