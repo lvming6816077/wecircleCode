@@ -11,13 +11,22 @@ var socket = require('../utils/socket')
 var getMsgByChat = async function(chat,keyword){
   var reg = new RegExp(keyword, 'i')
 
-  var list = await Message.find({
-    chat:chat._id,
-    'content.type':'str',
-    'content.value': {
-      $regex: reg
-    }
-  }).sort({'create':-1}).exec();
+  var list = [];
+  // 有关键词，则搜索type是str的记录
+  if (keyword) {
+    var list = await Message.find({
+      chat:chat._id,
+      'content.type':'str',
+      'content.value': {
+        $regex: reg
+      }
+    }).sort({'create':-1}).exec();
+  } else { // 否则搜索全部
+    var list = await Message.find({
+      chat:chat._id,
+    }).sort({'create':-1}).exec();
+  }
+
 
   return list[0] || false
 }

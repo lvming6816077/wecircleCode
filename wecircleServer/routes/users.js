@@ -18,9 +18,13 @@ var rateLimit = require("express-rate-limit");
 */
 var createUser = function(data){
 
+  // 用户名采用当前时间戳
   var nickname = '用户'+Date.now();
+  // 用户头像，随机使用9张里的其中一张
   var avatar = config.uploadPath+'avatar/avatar'+Math.ceil(Math.random() * 9 )+'.jpg';
+  // 背景图片，随机使用4张里的其中一张
   var bg = config.uploadPath+'bg/topbg'+Math.ceil(Math.random() * 4 )+'.jpg';
+  // 性别，先写死，后面可以修改
   var gender = '1';
   return User.create({
     nickname: nickname,
