@@ -11,74 +11,77 @@ import personpage from './views/personpage'
 
 Vue.use(Router)
 
-export default new Router({
-  routes: [
+export function createRouter () {
+  return new Router({
+    mode: 'history',
+    routes: [
 
-    {
-      path: '/',
-      name: 'wecircle',
-      component: wecircle
-    },
-    {
-      path: '/publish',
-      name: 'publish',
-      component: publish
+      {
+        path: '/index.html',
+        name: 'wecircle',
+        component: wecircle
+      },
+      {
+        path: '/publish',
+        name: 'publish',
+        component: publish
 
-      // component: () => import(/* webpackChunkName: "publish" */ './views/publish')
-    },
-    {
-      path: '/mypage',
-      name: 'mypage',
-      component: mypage
-      // component: () => import(/* webpackChunkName: "mypage" */ './views/mypage')
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: login
-      // component: () => import(/* webpackChunkName: "login" */ '@/components/login')
-    },
-    {
-      path: '/chat',
-      name: 'chat',
-      component: () => import(/* webpackChunkName: "chat" */ './views/chat')
-    },
-    {
-      path: '/chatlist',
-      name: 'chatlist',
-      component: () => import(/* webpackChunkName: "chatlist" */ './views/chatlist')
-    },
-    {
-      path: '/personpage',
-      name: 'personpage',
-      component: personpage
-      // component: () => import(/* webpackChunkName: "personpage" */ './views/personpage')
-    },
-    {
-      path: '/changenickname',
-      name: 'changenickname',
-      component: () => import(/* webpackChunkName: "changenickname" */ './views/changenickname')
-    },
-    {
-      path: '/changedesc',
-      name: 'changedesc',
-      component: () => import(/* webpackChunkName: "changenickname" */ './views/changedesc')
-    }
+        // component: () => import(/* webpackChunkName: "publish" */ './views/publish')
+      },
+      {
+        path: '/mypage',
+        name: 'mypage',
+        component: mypage
+        // component: () => import(/* webpackChunkName: "mypage" */ './views/mypage')
+      },
+      {
+        path: '/login',
+        name: 'login',
+        component: login
+        // component: () => import(/* webpackChunkName: "login" */ '@/components/login')
+      },
+      {
+        path: '/chat',
+        name: 'chat',
+        component: () => import(/* webpackChunkName: "chat" */ './views/chat')
+      },
+      {
+        path: '/chatlist',
+        name: 'chatlist',
+        component: () => import(/* webpackChunkName: "chatlist" */ './views/chatlist')
+      },
+      {
+        path: '/personpage',
+        name: 'personpage',
+        component: personpage
+        // component: () => import(/* webpackChunkName: "personpage" */ './views/personpage')
+      },
+      {
+        path: '/changenickname',
+        name: 'changenickname',
+        component: () => import(/* webpackChunkName: "changenickname" */ './views/changenickname')
+      },
+      {
+        path: '/changedesc',
+        name: 'changedesc',
+        component: () => import(/* webpackChunkName: "changenickname" */ './views/changedesc')
+      }
 
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (about.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+      // {
+      //   path: '/about',
+      //   name: 'about',
+      //   // route level code-splitting
+      //   // this generates a separate chunk (about.[hash].js) for this route
+      //   // which is lazy-loaded when the route is visited.
+      //   component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+      // }
+    ]
+    // scrollBehavior (to, from, savedPosition) {
+    //   if (savedPosition) {
+    //     return savedPosition
+    //   } else {
+    //     return { x: 0, y: 0 }
+    //   }
     // }
-  ],
-  scrollBehavior (to, from, savedPosition) {
-    if (savedPosition) {
-      return savedPosition
-    } else {
-      return { x: 0, y: 0 }
-    }
-  }
-})
+  })
+}

@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
-import store from './store'
+import { createRouter } from './router'
+import { createStore } from './store'
+import { sync } from 'vuex-router-sync'
 import VueSocketio from 'vue-socket.io'
 import socketio from 'socket.io-client'
 import service from '@/utils/service'
 
-// import './registerServiceWorker'
+
 
 import './assets/common.css'
 import './assets/weui.min.css'
@@ -35,11 +36,16 @@ Vue.use(VueSocketio, socketio(service.baseURL))// 与服务端链接
 // 导出一个工厂函数，用于创建新的
 // 应用程序、router 和 store 实例
 export function createApp () {
+  const router = new createRouter()
+  const store = new createStore()
+
+  sync(store, router)
+
   const app = new Vue({
     // 根实例简单的渲染应用程序组件。
-    router,
-    store,
+    router: router,
+    store: store,
     render: h => h(App)
   })
-  return { app }
+  return { app, router, store }
 }

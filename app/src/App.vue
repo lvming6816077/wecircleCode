@@ -18,7 +18,7 @@ export default {
       duration: ''
     }
   },
-  created () {
+  mounted () {
     weui.dialog({
       title: '请注意',
       content: '本页面只作为专栏项目的demo展示，请勿发布非法内容！',

@@ -1,45 +1,36 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
-import VueSocketio from 'vue-socket.io'
-import socketio from 'socket.io-client'
-import service from '@/utils/service'
+import { createApp } from './main_ssr'
 
-// import './registerServiceWorker'
 
-import './assets/common.css'
-import './assets/weui.min.css'
-import './assets/animate.css'
+export default context => {
+  return new Promise((resolve, reject) => {
+    const { app, router, store } = createApp()
 
-// window.onerror = (msg, url, line, col, error) => {
-//   // 直接将错误提示出来，可根据情况自行选择
+    router.push(context.url)
 
-//   weui.topTips(msg)
-// }
+    router.onReady(() => {
+      const matchedComponents = router.getMatchedComponents()
+      if (!matchedComponents.length) {
+        return reject({ code: 404 })
+      }
 
-Vue.config.productionTip = false
+      // 对所有匹配的路由组件调用 `asyncData()`
+      Promise.all(matchedComponents.map(Component => {
+        if (Component.asyncData) {
+          return Component.asyncData({
+            store,
+            route: router.currentRoute
+          })
+        }
+      })).then(() => {
+        // 在所有预取钩子(preFetch hook) resolve 后，
+        // 我们的 store 现在已经填充入渲染应用程序所需的状态。
+        // 当我们将状态附加到上下文，
+        // 并且 `template` 选项用于 renderer 时，
+        // 状态将自动序列化为 `window.__INITIAL_STATE__`，并注入 HTML。
+        context.state = store.state
 
-Vue.prototype.$bus = new Vue()
-
-Vue.use(VueSocketio, socketio(service.baseURL))// 与服务端链接
-// new Vue({
-//   router,
-//   store,
-//   render: h => h(App)
-// }).$mount('#app')
-
-// import Vue from 'vue'
-// import App from './App.vue'
-
-// 导出一个工厂函数，用于创建新的
-// 应用程序、router 和 store 实例
-export function createApp () {
-  const app = new Vue({
-    // 根实例简单的渲染应用程序组件。
-    router,
-    store,
-    render: h => h(App)
+        resolve(app)
+      }).catch(reject)
+    }, reject)
   })
-  return { app }
 }

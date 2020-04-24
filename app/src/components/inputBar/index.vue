@@ -24,7 +24,7 @@
 import { getCookie } from '@/utils/cookie'
 import service from '@/utils/service'
 export default {
-  name: 'inputBar',
+  name: 'inputbar',
   props: {
     data: Object,
     option: Object

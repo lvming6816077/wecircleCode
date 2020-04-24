@@ -32,7 +32,7 @@ var app = express();
 // 跨域配置 本地调试使用
 app.use(function(req, res, next) {
   // console.log(req.headers);
-  res.header("Access-Control-Allow-Origin", 'http://localhost:8080');
+  res.header("Access-Control-Allow-Origin", 'http://localhost:8888');
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, wec-access-token, Set-Cookie");
   res.header("Access-Control-Allow-Credentials", "true");
 

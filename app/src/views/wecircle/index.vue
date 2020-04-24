@@ -19,10 +19,10 @@
       </div>
       <list ref="list"></list>
       <div :style="{zIndex:showInput?'999':'-1',opacity:showInput?'1':'0'}" ref="inputBarWrap" class="input-wrap ios" v-if="iosInput">
-        <inputBar ref="inputBar" :option="inputBarOption" @publish="publish"/>
+        <inputbar ref="inputBar" :option="inputBarOption" @publish="publish"></inputbar>
       </div>
       <div :style="{opacity:showInput?'1':'0',bottom:showInput?'0':'-60px'}" ref="inputBarWrap" class="input-wrap android" v-if="androidInput">
-        <inputBar ref="inputBar" :option="inputBarOption" @publish="publish"/>
+        <inputbar ref="inputBar" :option="inputBarOption" @publish="publish"></inputbar>
       </div>
     </pullRefreshView>
     <div v-show="showPWA" @click="showPWA = false" class="add-screen"></div>
@@ -33,7 +33,7 @@
 // @ is an alias to /src
 import list from './list'
 import headerbar from './headerbar'
-import inputBar from '@/components/inputBar'
+import inputbar from '@/components/inputbar'
 import service from '@/utils/service'
 import os from '@/utils/os'
 import pullRefreshView from '@/components/pullRefreshView'
@@ -43,7 +43,7 @@ export default {
   components: {
     list,
     headerbar,
-    inputBar,
+    inputbar,
     pullRefreshView
   },
   props: {},
@@ -57,6 +57,10 @@ export default {
       iosInput: os.isIOS,
       androidInput: os.isAndroid
     }
+  },
+  asyncData ({ store }) {
+    // 触发 action 后，会返回 Promise
+    return store.dispatch('setWecircleDataListSSR')
   },
   computed: {
     myAvatar () {

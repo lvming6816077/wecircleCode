@@ -1,6 +1,8 @@
+
 const u = navigator.userAgent
 const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1
 const isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
+
 const isIpP = window.screen.height == 736 && window.screen.width == 414
 export default {
   isIOS: isIOS,

@@ -1,8 +1,9 @@
 import axios from 'axios'
-import router from '../router'
+
+import { createRouter } from '../router'
 import { getCookie } from './cookie'
 
-const baseURL = process.env.NODE_ENV === 'production' ? '/' : '//localhost:3000/'
+const baseURL = process.env.NODE_ENV === 'production' ? 'http://localhost:3000/' : 'http://localhost:3000/'
 
 // 创建axios实例
 let service = axios.create({
@@ -21,6 +22,7 @@ service.interceptors.request.use(config => {
 service.interceptors.response.use(
   response => {
     if (response.data.code === 1000) {
+      const router = new createRouter()
       router.push({
         path: 'login',
         name: 'login',
@@ -48,6 +50,15 @@ function get (url, params = {}) {
     headers: {
       'wec-access-token': getCookie('token')
     },
+    params
+  })
+}
+function getNoHeader (url, params = {}) {
+
+  return service({
+    url: url,
+    method: 'get',
+
     params
   })
 }
@@ -84,6 +95,7 @@ export default {
   get,
   post,
   put,
+  getNoHeader,
   baseURL,
   token: getCookie('token')
 }

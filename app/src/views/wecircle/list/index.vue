@@ -34,7 +34,6 @@ export default {
     return {
       isend: false,
       readyToLoad: true,
-      pageStart: 0,
       scrollTop: 0,
       lessDataFlag: false
     }
@@ -42,6 +41,9 @@ export default {
   computed: {
     dataList () {
       return this.$store.state.wecircleDataList
+    },
+    pageStart () {
+      return this.$store.state.wecirclePage
     }
   },
   async created () {
@@ -66,8 +68,8 @@ export default {
       }
     },
     refresh () {
-      this.pageStart = 0
-      this.$store.dispatch('setWecircleDataList', { first: true })
+
+      this.$store.dispatch('setWecircleDataList',{first:true})
       this.fetchData()
     },
     touchstart (evt) {
@@ -128,7 +130,8 @@ export default {
     },
     loadCallback () {
       // 页数加一
-      this.pageStart++
+      this.$store.dispatch('setWecirclePage', this.pageStart+1)
+
       this.fetchData()
     }
   }
