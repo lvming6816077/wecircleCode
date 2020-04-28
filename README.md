@@ -4,7 +4,7 @@
 
 ## 项目技术栈
 
-前端采用Vue全家桶技术（Vue.js，vue-router，webpack，ES6）。
+前端采用Vue全家桶技术（Vue.js，vue-router，vuex，webpack，ES6）。
 
 后端采用Node.js，Express，mongoose，MongoDB。
 
