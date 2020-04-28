@@ -70,10 +70,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/post', postRouter);
-app.use('/likecomment', likecommentRouter);
-app.use('/message', messageRouter.router);
+app.use('/cgi/users', usersRouter);
+app.use('/cgi/post', postRouter);
+app.use('/cgi/likecomment', likecommentRouter);
+app.use('/cgi/message', messageRouter.router);
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));

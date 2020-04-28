@@ -32,7 +32,9 @@ server.on('listening', onListening);
 
 // console.log(require('./bin/server'))
 
-var io = require('socket.io')(server);
+var io = require('socket.io')(server,{
+  path:'/socket'
+});
 
 
 io.on('connection', function(_socket){
