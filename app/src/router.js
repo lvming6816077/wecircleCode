@@ -9,15 +9,22 @@ import personpage from './views/personpage'
 // import chatlist from './views/chatlist'
 // import changenickname from './views/changenickname'
 
+const originalPush = Router.prototype.push
+Router.prototype.push = function push(location, onResolve, onReject) {
+  if (onResolve || onReject) return originalPush.call(this, location, onResolve, onReject)
+  return originalPush.call(this, location).catch(err => err)
+}
+  
 Vue.use(Router)
 
 export function createRouter () {
-  return new Router({
+
+  const router = new Router({
     mode: 'history',
     routes: [
 
       {
-        path: '/index.html',
+        path: '/',
         name: 'wecircle',
         component: wecircle
       },
@@ -75,7 +82,7 @@ export function createRouter () {
       //   // which is lazy-loaded when the route is visited.
       //   component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
       // }
-    ]
+    ],
     // scrollBehavior (to, from, savedPosition) {
     //   if (savedPosition) {
     //     return savedPosition
@@ -84,4 +91,25 @@ export function createRouter () {
     //   }
     // }
   })
+
+  // router.beforeEach((to,from,next)=>{
+
+    
+  //   console.error(to)
+  //   console.error(from)
+  //   // if (to.path == '/index.html') {
+  //   //   next('/')
+  //   // } else {
+      
+  //   // }
+  //   next()
+    
+  // })
+
+
+
+
+
+
+  return router
 }

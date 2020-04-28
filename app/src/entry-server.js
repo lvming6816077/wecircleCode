@@ -5,10 +5,16 @@ export default context => {
   return new Promise((resolve, reject) => {
     const { app, router, store } = createApp()
 
-    router.push(context.url)
+    // console.log(context.url)
+    try {
+      router.push(context.url)
+    }catch(e){}
+    
 
     router.onReady(() => {
+      
       const matchedComponents = router.getMatchedComponents()
+
       if (!matchedComponents.length) {
         return reject({ code: 404 })
       }
@@ -16,6 +22,7 @@ export default context => {
       // 对所有匹配的路由组件调用 `asyncData()`
       Promise.all(matchedComponents.map(Component => {
         if (Component.asyncData) {
+
           return Component.asyncData({
             store,
             route: router.currentRoute
@@ -30,7 +37,10 @@ export default context => {
         context.state = store.state
 
         resolve(app)
-      }).catch(reject)
+      }).catch((err)=>{
+        console.error(err)
+        reject(err)
+      })
     }, reject)
   })
 }

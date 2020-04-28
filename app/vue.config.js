@@ -48,7 +48,7 @@ if (TARGET_NODE) {
 
 module.exports = {
 
-  publicPath: '/',
+  publicPath: './',
   outputDir: TARGET_NODE ? 'nodedist' : 'dist',
   lintOnSave: true,
   assetsDir: 'static',

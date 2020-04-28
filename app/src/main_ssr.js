@@ -23,7 +23,9 @@ Vue.config.productionTip = false
 
 Vue.prototype.$bus = new Vue()
 
-Vue.use(VueSocketio, socketio(service.baseURL))// 与服务端链接
+Vue.use(VueSocketio, socketio(service.baseServer,{
+  path:'/socket'
+}))// 与服务端链接
 // new Vue({
 //   router,
 //   store,
@@ -47,5 +49,7 @@ export function createApp () {
     store: store,
     render: h => h(App)
   })
+
+  
   return { app, router, store }
 }
