@@ -132,7 +132,7 @@ export function createStore () {
             })
           })
           context.commit('wecircleDataList', array)
-          context.commit('wecirclePage', 1)
+          context.commit('wecirclePage', 0)
         })
 
       },

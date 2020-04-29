@@ -18,7 +18,7 @@ const dom = new JSDOM('', {
 global.window = dom.window
 global.document = window.document
 global.navigator = window.navigator
-window.nodeis = true
+window.nodeis = true //给window标识出node环境的标志位
 /* 模拟window对象逻辑 */
 
 // const resolve = file => path.resolve(__dirname + '../../public', file)
