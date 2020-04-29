@@ -2,48 +2,52 @@ const OfflinePlugin = require('offline-plugin')
 const nodeExternals = require('webpack-node-externals')
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
 const VueSSRServerPlugin = require('vue-server-renderer/server-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const TARGET_NODE = process.env.WEBPACK_TARGET === 'node'
+
+const dev = process.env.WEBPACK_TARGET === 'serve'
 
 const target = TARGET_NODE ? 'server' : 'client'
 
 const merge = require('lodash.merge')
 
-let plugins = [];
+let plugins = []
 
-if (TARGET_NODE) {
-  plugins.push(new VueSSRServerPlugin())
-} else {
-  plugins.push(new VueSSRClientPlugin())
-  plugins.push(new CopyWebpackPlugin([
-          {
-              from: __dirname+'/nodedist',
-              to: __dirname+'/dist',
-          }
-      ]))
-  plugins.push(new OfflinePlugin({
-        // 要求触发ServiceWorker事件回调
-        ServiceWorker: {
-          events: true,
-          // push事件逻辑写在另外一个文件里面
-          entry: './public/sw-push.js'
-        },
-        // 更更新策略选择全部更新
-        updateStrategy: 'all',
-        // 除去一些不需要缓存的文件
-        excludes: ['**/*.map', '**/*.svg', '**/*.png', '**/*.jpg', '**/sw-push.js', '**/sw-my.js','**/*.json'],
+// 调试模式下不执行SSR相关逻辑
+if (process.env.NODE_ENV === 'production') {
+  if (TARGET_NODE) {
+    plugins.push(new VueSSRServerPlugin())
+  } else {
+    plugins.push(new VueSSRClientPlugin())
+    plugins.push(new CopyWebpackPlugin([
+      {
+        from: __dirname + '/nodedist',
+        to: __dirname + '/dist'
+      }
+    ]))
+    plugins.push(new OfflinePlugin({
+      // 要求触发ServiceWorker事件回调
+      ServiceWorker: {
+        events: true,
+        // push事件逻辑写在另外一个文件里面
+        entry: './public/sw-push.js'
+      },
+      // 更更新策略选择全部更新
+      updateStrategy: 'all',
+      // 除去一些不需要缓存的文件
+      excludes: ['**/*.map', '**/*.svg', '**/*.png', '**/*.jpg', '**/sw-push.js', '**/sw-my.js', '**/*.json'],
 
-        // 添加index.html的更新
-        rewrites (asset) {
-          if (asset.indexOf('index.html') > -1) {
-            return './index.html'
-          }
-
-          return asset
+      // 添加index.html的更新
+      rewrites (asset) {
+        if (asset.indexOf('index.html') > -1) {
+          return './index.html'
         }
-      }))
-      
+
+        return asset
+      }
+    }))
+  }
 }
 
 module.exports = {
@@ -81,7 +85,7 @@ module.exports = {
     optimization: {
       splitChunks: false
     },
-    plugins: plugins,
+    plugins: plugins
   },
   chainWebpack: config => {
     config.module

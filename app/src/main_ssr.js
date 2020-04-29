@@ -7,8 +7,6 @@ import VueSocketio from 'vue-socket.io'
 import socketio from 'socket.io-client'
 import service from '@/utils/service'
 
-
-
 import './assets/common.css'
 import './assets/weui.min.css'
 import './assets/animate.css'
@@ -23,8 +21,8 @@ Vue.config.productionTip = false
 
 Vue.prototype.$bus = new Vue()
 
-Vue.use(VueSocketio, socketio(service.baseServer,{
-  path:'/socket'
+Vue.use(VueSocketio, socketio(service.baseServer, {
+  path: '/socket'
 }))// 与服务端链接
 // new Vue({
 //   router,
@@ -50,6 +48,5 @@ export function createApp () {
     render: h => h(App)
   })
 
-  
   return { app, router, store }
 }

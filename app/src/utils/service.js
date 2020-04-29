@@ -3,9 +3,8 @@ import axios from 'axios'
 import { createRouter } from '../router'
 import { getCookie } from './cookie'
 
-// const baseServer = 'http://localhost:3000/'
-const baseServer = '/'
-const baseURL = process.env.NODE_ENV === 'production' ? baseServer+'cgi/' : 'http://localhost:3000/cgi/'
+const baseServer = process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3000/'
+const baseURL = process.env.NODE_ENV === 'production' ? baseServer + 'cgi/' : 'http://localhost:3000/cgi/'
 
 // 创建axios实例
 let service = axios.create({
@@ -58,7 +57,7 @@ function get (url, params = {}) {
 function getNoHeader (url, params = {}) {
   // ssr的请求直接走服务端的地址
   return service({
-    url: 'http://localhost:3000'+baseURL+url,
+    url: 'http://localhost:3000' + baseURL + url,
     method: 'get',
 
     params
