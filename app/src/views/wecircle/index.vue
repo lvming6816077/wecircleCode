@@ -19,10 +19,10 @@
       </div>
       <list ref="list"></list>
       <div :style="{zIndex:showInput?'999':'-1',opacity:showInput?'1':'0'}" ref="inputBarWrap" class="input-wrap ios" v-if="iosInput">
-        <inputbar ref="inputBar" :option="inputBarOption" @publish="publish"></inputbar>
+        <inputBar ref="inputBar" :option="inputBarOption" @publish="publish"></inputBar>
       </div>
       <div :style="{opacity:showInput?'1':'0',bottom:showInput?'0':'-60px'}" ref="inputBarWrap" class="input-wrap android" v-if="androidInput">
-        <inputbar ref="inputBar" :option="inputBarOption" @publish="publish"></inputbar>
+        <inputBar ref="inputBar" :option="inputBarOption" @publish="publish"></inputBar>
       </div>
     </pullRefreshView>
     <div v-show="showPWA" @click="showPWA = false" class="add-screen"></div>
@@ -33,7 +33,7 @@
 // @ is an alias to /src
 import list from './list'
 import headerbar from './headerbar'
-import inputbar from '@/components/inputbar'
+import inputBar from '@/components/inputBar'
 import service from '@/utils/service'
 import os from '@/utils/os'
 import pullRefreshView from '@/components/pullRefreshView'
@@ -43,7 +43,7 @@ export default {
   components: {
     list,
     headerbar,
-    inputbar,
+    inputBar,
     pullRefreshView
   },
   props: {},

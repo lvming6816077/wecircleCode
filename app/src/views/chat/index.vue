@@ -6,7 +6,7 @@
       <chatItem v-for="(item) in dataList" :data="item" :key="item._id"/>
     </div>
     <div :class="bottomClass" :style="bottomStyle">
-      <inputbar
+      <inputBar
         ref="inputBar"
         :option="{}"
         @publish="publish"
@@ -21,7 +21,7 @@
 
 <script>
 // @ is an alias to /src
-import inputbar from '@/components/inputbar'
+import inputBar from '@/components/inputBar'
 import navHeader from '@/components/navHeader'
 import chatItem from '@/components/chatItem'
 import service from '@/utils/service'
@@ -30,7 +30,7 @@ export default {
   name: 'chat',
   components: {
     navHeader,
-    inputbar,
+    inputBar,
     chatItem
   },
   props: {},
