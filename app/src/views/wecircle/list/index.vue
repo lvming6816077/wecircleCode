@@ -68,8 +68,7 @@ export default {
       }
     },
     refresh () {
-
-      this.$store.dispatch('setWecircleDataList',{first:true})
+      this.$store.dispatch('setWecircleDataList', { first: true })
       this.fetchData()
     },
     touchstart (evt) {
@@ -130,7 +129,7 @@ export default {
     },
     loadCallback () {
       // 页数加一
-      this.$store.dispatch('setWecirclePage', this.pageStart+1)
+      this.$store.dispatch('setWecirclePage', this.pageStart + 1)
 
       this.fetchData()
     }

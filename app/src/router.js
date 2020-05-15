@@ -10,16 +10,15 @@ import personpage from './views/personpage'
 // import changenickname from './views/changenickname'
 
 const originalPush = Router.prototype.push
-Router.prototype.push = function push(location, onResolve, onReject) {
+Router.prototype.push = function push (location, onResolve, onReject) {
   if (onResolve || onReject) return originalPush.call(this, location, onResolve, onReject)
   return originalPush.call(this, location).catch(err => err)
 }
-  
+
 Vue.use(Router)
 
 export function createRouter () {
-
-  const router = new Router({
+  let obj = {
     mode: 'history',
     routes: [
 
@@ -82,34 +81,38 @@ export function createRouter () {
       //   // which is lazy-loaded when the route is visited.
       //   component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
       // }
-    ],
-    // scrollBehavior (to, from, savedPosition) {
-    //   if (savedPosition) {
-    //     return savedPosition
-    //   } else {
-    //     return { x: 0, y: 0 }
-    //   }
-    // }
-  })
+    ]
+  }
+
+  // SSR环境下不需要scrollBehavior
+  if (!window.nodeis) {
+    obj.scrollBehavior = (to, from, savedPosition) => {
+      if (savedPosition) {
+        // 跳转时保持可视范围
+        try {
+          document.getElementsByClassName('slideOutRight')[0].style.top = savedPosition.y + 'px'
+        } catch (e) {}
+
+        return savedPosition
+      } else {
+        return { x: 0, y: 0 }
+      }
+    }
+  }
+  const router = new Router(obj)
 
   // router.beforeEach((to,from,next)=>{
 
-    
   //   console.error(to)
   //   console.error(from)
   //   // if (to.path == '/index.html') {
   //   //   next('/')
   //   // } else {
-      
+
   //   // }
   //   next()
-    
+
   // })
-
-
-
-
-
 
   return router
 }

@@ -37,7 +37,6 @@ export function createStore () {
         } else {
           state.wecircleDataList = state.wecircleDataList.concat(list)
         }
-
       },
 
       wecirclePage (state, page) {
@@ -114,8 +113,7 @@ export function createStore () {
       setWecircleDataListSSR (context) {
         return service.getNoHeader('post/getcirclepost', {
           pageStart: 0
-        }).then((resp)=>{
-
+        }).then((resp) => {
           let array = []
           resp.data.forEach(item => {
             array.push({
@@ -134,7 +132,6 @@ export function createStore () {
           context.commit('wecircleDataList', array)
           context.commit('wecirclePage', 0)
         })
-
       },
       addComment (context, obj) {
         context.commit('addComment', obj)

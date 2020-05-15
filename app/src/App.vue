@@ -51,7 +51,7 @@ export default {
       // 从下往上切换
       if (to.name === 'publish' || to.name === 'login') {
         this.transitionNameIn = 'animated faster slideInUp'
-        this.transitionNameOut = 'slideOutIng'
+        this.transitionNameOut = ''
       } else if (from.name === 'publish' || from.name === 'login') {
         this.transitionNameIn = ''
         this.transitionNameOut = 'animated faster slideOutDown'
@@ -73,10 +73,13 @@ export default {
 </script>
 
 <style>
-.slideOutIng {
+
+.slideOutRight,.slideOutLeft {
   position: absolute;
   left: 0;
   right: 0;
+  bottom:0;
+  top: 0;
 }
 
 </style>
