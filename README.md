@@ -58,4 +58,7 @@
 项目中使用的阿里云的短信服务和图片服务都需要事先申请到`accessKeySecret`，这个对于接入用户来说收费获取并且是保密的，所以如果各位想要体验，可以自行去阿里云官网注册申请。[入口](https://dysms.console.aliyun.com/dysms.htm?spm=a2c4g.11186623.2.26.2e202e79lpW6kK&accounttraceid=7d619ee3-a9ad-4890-af2e-e3ef2533b73f#/overview)
 
 
+需要adminMongo的同学可以在这里[下载](https://www.nihaoshijie.com.cn/mypro/adminMongo.zip)
+
+
 #### 各位同学也欢迎提PR，共同维护好此项目，祝大家学习愉快！
