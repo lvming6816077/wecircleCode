@@ -18,16 +18,16 @@ function getIPAdress() {
 module.exports = {
   //需要登录态的接口
   tokenApi:[
-  '/post/uploadimg',
-  '/post/uploadimgaliyun',
-  '/post/savepost',
-  '/likecomment/addlike',
-  '/likecomment/addcomment',
-  '/user/update',
-  '/likecomment/removelike',
-  '/message/addmsg',
-  '/message/getchatlist',
-  '/message/getchathistory'
+  '/cgi/post/uploadimg',
+  '/cgi/post/uploadimgaliyun',
+  '/cgi/post/savepost',
+  '/cgi/likecomment/addlike',
+  '/cgi/likecomment/addcomment',
+  '/cgi/user/update',
+  '/cgi/likecomment/removelike',
+  '/cgi/message/addmsg',
+  '/cgi/message/getchatlist',
+  '/cgi/message/getchathistory'
   ],
   uploadPath:'//app.nihaoshijie.com.cn/upload/',
   accessKeySecret: 'abc123'
