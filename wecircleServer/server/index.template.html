@@ -12,7 +12,15 @@
   <link rel="apple-touch-icon" sizes="76x76" href="{{ BASE_URL }}img/icons/apple-touch-icon-76x76-1.png" />
   <link rel="apple-touch-icon" sizes="152x152" href="{{ BASE_URL }}img/icons/apple-touch-icon-152x152-1.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="{{ BASE_URL }}img/icons/apple-touch-icon-180x180-1.png" />
-
+  <script type="text/javascript" src="{{ BASE_URL }}lib/web-report-sdk.min.js"></script>
+  <script type="text/javascript">
+      webReportSdk({
+          domain: 'https://app.nihaoshijie.com.cn/vmpserver/api/v1/report/web', 
+          add:{
+              appId:'C6DmG8e1593767571061'
+          }
+      })
+  </script>
   <title>Wecircle</title>
 </head>
 
