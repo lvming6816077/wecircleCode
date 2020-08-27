@@ -33,6 +33,7 @@ export function createStore () {
       */
       wecircleDataList (state, list) {
         if (list.first) {
+           state.wecirclePage = 0
           state.wecircleDataList = []
         } else {
           state.wecircleDataList = state.wecircleDataList.concat(list)
