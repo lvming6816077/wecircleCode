@@ -62,6 +62,7 @@ app.use('*', (req, res) => {
   }
   // console.log(bundle)
   context.url = req.originalUrl
+  // console.log(context.url)
   if (req.originalUrl === '/index_ssr' || req.originalUrl === '/index_ssr/') {
     context.url = '/'
   }
