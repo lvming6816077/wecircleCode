@@ -84,6 +84,7 @@ export default {
     }
   },
   mounted () {
+
     // 处理评论输入框的现实和隐藏
     this.$bus.$on('showInput', (flag, currentData) => {
       this.showInput = flag
@@ -111,6 +112,7 @@ export default {
         } catch (e) {}
       }
     })
+    new Image().src = 'https://www.nihaoshijie.com.cn/rapi/report/create?code=172543'
     var self = this
     weui.uploader('#uploaderBg', {
       url: service.baseURL + 'post/uploadimgaliyun',
