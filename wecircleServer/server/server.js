@@ -4,6 +4,11 @@ const express = require('express')
 const { createBundleRenderer } = require('vue-server-renderer')
 const jsdom = require('jsdom')
 const { JSDOM } = jsdom
+// var heapdump = require('heapdump');
+
+//heapdump.writeSnapshot('./' + Date.now() + '.heapsnapshot');
+
+
 
 
 /* 模拟window对象逻辑 */
@@ -26,9 +31,9 @@ const resolve = file => path.resolve(__dirname + '../../../http-server/wecircle'
 
 const app = express()
 // 配置页面静态资源路径
-const serve = (path, cache) => express.static(resolve(path), {
-  maxAge: 0
-})
+// const serve = (path, cache) => express.static(resolve(path), {
+//   maxAge: 0
+// })
 // app.use('/', serve('../dist/'))
 // app.use('/static', serve('./static'))
 // app.use('/lib', serve('./lib'))
@@ -39,27 +44,30 @@ const serve = (path, cache) => express.static(resolve(path), {
 // app.use('/manifest.json', serve('./manifest.json'))
 // app.use('/index.html', serve('./index.html')) // 保留客户端渲染入口
 // 页面信息
-const context = {
-  title: '',
-  url: '',
-  BASE_URL:'./'
-}
-// 构建渲染方法
-const renderer = (bundle, clientManifest) => createBundleRenderer(bundle, {
-  runInNewContext: false,
-  template: fs.readFileSync('./index.template.html', 'utf-8'),
-  clientManifest
-})
-console.log(resolve('./vue-ssr-server-bundle.json'))
+
+
+
 // 构建信息
 let bundle = require(resolve('./vue-ssr-server-bundle.json'))
 let manifest = require(resolve('./vue-ssr-client-manifest.json'))
 
+// 构建渲染方法
+const renderer = createBundleRenderer(bundle, {
+    runInNewContext: false,
+    template: fs.readFileSync('./index.template.html', 'utf-8'),
+    clientManifest:manifest
+  })
+
 app.use('*', (req, res) => {
-  if (!bundle) {
-    res.body = '等待webpack打包完成后在访问在访问'
-    return
-  }
+    const context = {
+  title: '',
+  url: '',
+  BASE_URL:'./'
+}
+//   if (!bundle) {
+//     res.body = '等待webpack打包完成后在访问在访问'
+//     return
+//   }
   // console.log(bundle)
   context.url = req.originalUrl
   // console.log(context.url)
@@ -68,7 +76,7 @@ app.use('*', (req, res) => {
   }
   
 
-  renderer(bundle, manifest).renderToString(context, (err, html) => {
+  renderer.renderToString(context, (err, html) => {
 
     if (err) {
       // 发现报错，直接走客户端渲染
