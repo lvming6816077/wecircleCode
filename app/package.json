@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "build:server": "cross-env WEBPACK_TARGET=node vue-cli-service build && vue-cli-service build"
+    "build:ssr": "cross-env WEBPACK_TARGET=node vue-cli-service build && vue-cli-service build"
   },
   "dependencies": {
     "axios": "^0.18.0",
